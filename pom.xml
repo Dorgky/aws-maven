@@ -4,26 +4,33 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.platform-team</groupId>
+    <groupId>io.kuhubgit</groupId>
     <artifactId>aws-maven</artifactId>
     <packaging>jar</packaging>
-    <version>6.0.0</version>
-    <name>Amazon Web Services S3 Maven Wagon Support</name>
+    <version>7.0.0</version>
+    <name>S3 Maven Wagon Support Using AWS SDK for Java 2.0</name>
     <description>Standard Maven wagon support for s3:// urls</description>
 
     <properties>
-        <amazonaws.version>1.11.276</amazonaws.version>
+        <amazonaws.version>2.4.0</amazonaws.version>
         <wagon.version>3.0.0</wagon.version>
-
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
-
         <junit.version>4.12</junit.version>
         <mockito.version>2.15.0</mockito.version>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>${amazonaws.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -31,27 +38,19 @@
             <version>${logback.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-            <version>${amazonaws.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.mail</groupId>
-                    <artifactId>mail</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>stax</groupId>
-                    <artifactId>stax-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>stax</groupId>
-                    <artifactId>stax</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>auth</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>apache-client</artifactId>
+            <version>2.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.wagon</groupId>
@@ -199,12 +198,11 @@
             </plugin>
             -->
         </plugins>
-
     </build>
 
-    <url>https://github.com/platform-team/aws-maven</url>
+    <url>https://github.com/kuhubgit/aws-maven</url>
 
-    <inceptionYear>2018</inceptionYear>
+    <inceptionYear>2019</inceptionYear>
 
     <licenses>
         <license>
@@ -215,30 +213,25 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:platform-team/aws-maven.git</connection>
-        <url>https://github.com/platform-team/aws-maven</url>
+        <connection>scm:git:git@github.com:kuhubgit/aws-maven.git</connection>
+        <url>https://github.com/kuhubgit/aws-maven</url>
     </scm>
 
     <organization>
-        <name>Platform Team</name>
-        <url>https://platform.team</url>
+        <name>kuhubgit</name>
+        <url>https://kuhubgit.github.io</url>
     </organization>
-
-    <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/platform-team/aws-maven</url>
-    </ciManagement>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/platform-team/aws-maven/issues</url>
+        <url>https://github.com/kuhubgit/aws-maven/issues</url>
     </issueManagement>
 
     <developers>
         <developer>
-            <id>moleksyuk</id>
-            <name>Mykhailo Oleksiuk</name>
-            <email>mykhailo.oleksiuk@gmail.com</email>
+            <id>dev01ku</id>
+            <name>dev01ku</name>
+            <email>dev01ku@gmail.com</email>
         </developer>
     </developers>
 

@@ -3,7 +3,7 @@
         <component>
             <role>org.apache.maven.wagon.Wagon</role>
             <role-hint>s3</role-hint>
-            <implementation>com.github.platform.team.plugin.AmazonS3Wagon</implementation>
+            <implementation>com.github.kuhubgit.plugin.AmazonS3Wagon</implementation>
             <instantiation-strategy>per-lookup</instantiation-strategy>
         </component>
     </components>
