@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Platform Team.
+ * Copyright 2019-Present Kuraun Developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package io.github.kuraun.aws.maven.plugin;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import io.github.kuraun.aws.maven.plugin.data.TransferProgress;
 import io.github.kuraun.aws.maven.plugin.data.transfer.StandardTransferListenerSupport;
 import io.github.kuraun.aws.maven.plugin.data.transfer.StandardTransferProgress;
@@ -29,51 +28,53 @@ import org.apache.maven.wagon.repository.Repository;
 import org.apache.maven.wagon.resource.Resource;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.S3Configuration;
+import software.amazon.awssdk.testutils.service.AwsTestBase;
 
 import java.io.File;
-import java.net.URI;
 import java.util.List;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.any;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-// This is not still work.
-public class AmazonS3WagonTest {
+// WireMockRule is not still work.
+public class AmazonS3WagonIntegrationTest extends AwsTestBase {
 
+    // dummy file
     private static final String FILE_NAME = "robots.txt";
 
-    private static final String BUCKET_NAME = "s3.bucket";
+    /*
+     * [profile aws-test-account] can access to bucket name.
+     */
+    private static final String BUCKET_NAME = System
+            .getProperty("aws.maven.bucket");
 
+    /*
+     * [profile aws-test-account] can access to key(directory or repository) name.
+     */
     private static final String BASE_DIRECTORY = "repo/";
 
-    @Rule
-    public WireMockRule mockServer = new WireMockRule(0);
+    //    @Rule
+    //    public WireMockRule mockServer = new WireMockRule(8443);
 
     private AmazonS3Wagon wagon;
 
     @Before
     public void setup() {
-        S3Client s3Client = S3Client.builder().credentialsProvider(
-                StaticCredentialsProvider
-                        .create(AwsBasicCredentials.create("akid", "skid")))
-                .region(Region.AP_NORTHEAST_1).endpointOverride(
-                        URI.create("http://localhost:" + mockServer.port()))
-                .serviceConfiguration(S3Configuration.builder()
-                        .checksumValidationEnabled(false).build()).build();
+        //        S3Client s3Client = S3Client.builder().credentialsProvider(
+        //                StaticCredentialsProvider
+        //                        .create(AwsBasicCredentials.create("akid", "skid")))
+        //                .region(Region.AP_NORTHEAST_1).endpointOverride(
+        //                        URI.create("http://localhost:" + mockServer.port()))
+        //                .serviceConfiguration(S3Configuration.builder()
+        //                        .checksumValidationEnabled(false).build()).build();
+        S3Client s3ClientIt = S3Client.builder().region(Region.AP_NORTHEAST_1)
+                .credentialsProvider(CREDENTIALS_PROVIDER_CHAIN).build();
 
-        wagon = new AmazonS3Wagon(s3Client, BUCKET_NAME, BASE_DIRECTORY);
+        wagon = new AmazonS3Wagon(s3ClientIt, BUCKET_NAME, BASE_DIRECTORY);
     }
 
     private TransferProgress getTransferProgress(int transferEvent) {
@@ -101,61 +102,61 @@ public class AmazonS3WagonTest {
 
     @Test
     public void doesRemoteResourceExistExists() {
-        stubFor(any(urlMatching(".*")).willReturn(
-                aResponse().withStatus(200).withBody("<xml></xml>")));
+        //        stubFor(any(urlMatching(".*")).willReturn(
+        //                aResponse().withStatus(200).withBody("<xml></xml>")));
         assertTrue(this.wagon.doesRemoteResourceExist(FILE_NAME));
     }
 
     @Test
     public void isRemoteResourceNewerNewer() throws Exception {
-        stubFor(any(urlMatching(".*")).willReturn(
-                aResponse().withStatus(200).withBody("<xml></xml>")));
+        //        stubFor(any(urlMatching(".*")).willReturn(
+        //                aResponse().withStatus(200).withBody("<xml></xml>")));
         assertTrue(this.wagon.isRemoteResourceNewer(FILE_NAME, 0));
     }
 
-    // not work
-    @Ignore
+    // WireMockRule not work
+    //@Ignore
     @Test
     public void isRemoteResourceNewerOlder() throws ResourceDoesNotExistException {
         assertFalse(this.wagon.isRemoteResourceNewer(FILE_NAME, Long.MAX_VALUE));
     }
 
-    // not work
-    @Ignore
+    // WireMockRule not work
+    //@Ignore
     @Test
     public void isRemoteResourceNewerNoLastModified() throws ResourceDoesNotExistException {
-        stubFor(any(urlMatching(".*")).willReturn(
-                aResponse().withStatus(200).withBody("<xml></xml>")));
+        //        stubFor(any(urlMatching(".*")).willReturn(
+        //                aResponse().withStatus(200).withBody("<xml></xml>")));
         assertTrue(this.wagon.isRemoteResourceNewer(FILE_NAME, 0));
     }
 
     // not work
-    @Ignore
+    //@Ignore
     @Test(expected = ResourceDoesNotExistException.class)
     public void isRemoteResourceNewerDoesNotExist() throws ResourceDoesNotExistException {
-        stubFor(any(urlMatching(".*")).willReturn(
-                aResponse().withStatus(200).withBody("<xml></xml>")));
-        this.wagon.isRemoteResourceNewer(FILE_NAME, 0);
+        //        stubFor(any(urlMatching(".*")).willReturn(
+        //                aResponse().withStatus(200).withBody("<xml></xml>")));
+        this.wagon.isRemoteResourceNewer("frogs.txt", 0);
     }
 
-    // not work
-    @Ignore
+    // WireMockRule not work
+    //@Ignore
     @Test
     public void listDirectoryTopLevel() throws ResourceDoesNotExistException {
-        stubFor(any(urlMatching(".*")).willReturn(
-                aResponse().withStatus(200).withBody("<xml></xml>")));
+        //        stubFor(any(urlMatching(".*")).willReturn(
+        //                aResponse().withStatus(200).withBody("<xml></xml>")));
         List<String> directoryContents = this.wagon.listDirectory("");
         assertTrue(directoryContents.contains(FILE_NAME));
         assertFalse(directoryContents.contains("frogs.txt"));
     }
 
-    // not work
-    @Ignore
+    // WireMockRule not work
+    //@Ignore
     @Test
     public void listDirectoryTopNested()
             throws TransferFailedException, ResourceDoesNotExistException {
-        stubFor(any(urlMatching(".*")).willReturn(
-                aResponse().withStatus(200).withBody("<xml></xml>")));
+        //        stubFor(any(urlMatching(".*")).willReturn(
+        //                aResponse().withStatus(200).withBody("<xml></xml>")));
 
         File target = new File("src/test/resources/robots.txt");
         wagon.putResource(target, "release/robots.txt",
@@ -169,16 +170,16 @@ public class AmazonS3WagonTest {
 
     @Test(expected = ResourceDoesNotExistException.class)
     public void listDirectoryDoesNotExist() throws ResourceDoesNotExistException {
-        stubFor(any(urlMatching(".*")).willReturn(
-                aResponse().withStatus(200).withBody("<xml></xml>")));
+        //        stubFor(any(urlMatching(".*")).willReturn(
+        //                aResponse().withStatus(200).withBody("<xml></xml>")));
         this.wagon.listDirectory("frogs");
     }
 
     @Test
     public void getResource()
             throws TransferFailedException, ResourceDoesNotExistException {
-        stubFor(any(urlMatching(".*")).willReturn(
-                aResponse().withStatus(200).withBody("<xml></xml>")));
+        //        stubFor(any(urlMatching(".*")).willReturn(
+        //                aResponse().withStatus(200).withBody("<xml></xml>")));
 
         File target = new File("src/test/resources/robots.txt");
         this.wagon.putResource(target, FILE_NAME,

@@ -1,10 +1,5 @@
 # AWS Maven Wagon
-[![GitHub version](https://badge.fury.io/gh/platform-team%2Faws-maven.svg)](http://badge.fury.io/gh/platform-team%2Faws-maven)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-[![Dependency Status](https://www.versioneye.com/user/projects/5a8ab8e30fb24f3a2ef5b4be/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5a8ab8e30fb24f3a2ef5b4be)
-[![Build Status](https://travis-ci.org/platform-team/aws-maven.svg?branch=master)](https://travis-ci.org/platform-team/aws-maven)
-[![Coverage Status](https://coveralls.io/repos/github/platform-team/aws-maven/badge.svg?branch=master)](https://coveralls.io/github/platform-team/aws-maven?branch=master)
 
 
 ## Description
@@ -12,12 +7,11 @@ This project is a fork of a [Maven Wagon](https://github.com/spring-projects/aws
 
 
 ## Why this fork?
-- original repo not maintained for a long time but we updated fork to the latest libs.
-- we fixed some of issues that blocks others and us.
-- no support from maintainers of original repo. 
+- Using AWS SDK v2.
 
 
 ## Usage
+TODO:
 To publish Maven artifacts to S3 a build extension must be defined in a project's `pom.xml`.  The latest version of the wagon can be found on the [`aws-maven`](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.platform-team%22%20AND%20a%3A%22aws-maven%22) page in Maven Central.
 
 ```xml
@@ -28,9 +22,9 @@ To publish Maven artifacts to S3 a build extension must be defined in a project'
     <extensions>
       ...
       <extension>
-        <groupId>com.github.platform-team</groupId>
+        <groupId>io.github.kuraun</groupId>
         <artifactId>aws-maven</artifactId>
-        <version>6.0.0</version>
+        <version>7.0.0</version>
       </extension>
       ...
     </extensions>
@@ -209,15 +203,13 @@ EOF
 aws s3api put-bucket-policy --bucket $BUCKET --policy "$POLICY"
 ```
 
-## Release Notes
-* `6.0.0`
-    - Updated to the latest versions of aws-sdk and maven-wagon.
-    - Changed order of aws credential resolution strategy.
-    - Added support of all regions defined in aws-sdk.
+## Release Notes(TODO)
+* `7.0.0`
+    - Updated to the 2.x versions of aws-sdk and maven-wagon.
 
 ## License
 
-Copyright 2018-Present Platform Team.
+Copyright 2019-Present Kuraun Developers.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

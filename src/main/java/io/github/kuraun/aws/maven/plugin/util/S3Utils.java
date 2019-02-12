@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Platform Team.
+ * Copyright 2019-Present Kuraun Developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,9 @@ import software.amazon.awssdk.http.apache.ProxyConfiguration;
 import java.net.URI;
 import java.util.Objects;
 
-import static org.apache.commons.lang3.StringUtils.*;
+import static org.apache.commons.lang3.StringUtils.appendIfMissing;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.apache.commons.lang3.StringUtils.substringAfter;
 
 public abstract class S3Utils {
 

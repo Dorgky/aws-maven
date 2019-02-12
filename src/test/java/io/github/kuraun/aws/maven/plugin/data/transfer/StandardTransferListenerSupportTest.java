@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Platform Team.
+ * Copyright 2019-Present Kuraun Developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package io.github.kuraun.aws.maven.plugin.data.transfer;
 
-import io.github.kuraun.aws.maven.plugin.maven.matchers.Matchers;
 import io.github.kuraun.aws.maven.plugin.data.TransferListenerSupport;
+import io.github.kuraun.aws.maven.plugin.maven.matchers.Matchers;
 import org.apache.maven.wagon.Wagon;
 import org.apache.maven.wagon.events.TransferEvent;
 import org.apache.maven.wagon.events.TransferListener;
@@ -28,7 +28,6 @@ import org.mockito.ArgumentMatchers;
 
 import java.io.IOException;
 
-import static io.github.kuraun.aws.maven.plugin.maven.matchers.Matchers.eq;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;

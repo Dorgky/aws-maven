@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-Present Platform Team.
+ * Copyright 2019-Present Kuraun Developers.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ package io.github.kuraun.aws.maven.plugin.maven;
 import io.github.kuraun.aws.maven.plugin.data.SessionListenerSupport;
 import io.github.kuraun.aws.maven.plugin.data.TransferListenerSupport;
 import io.github.kuraun.aws.maven.plugin.data.TransferProgress;
-import io.github.kuraun.aws.maven.plugin.data.transfer.StandardTransferProgress;
 import io.github.kuraun.aws.maven.plugin.data.transfer.StandardSessionListenerSupport;
 import io.github.kuraun.aws.maven.plugin.data.transfer.StandardTransferListenerSupport;
+import io.github.kuraun.aws.maven.plugin.data.transfer.StandardTransferProgress;
 import org.apache.maven.wagon.ConnectionException;
 import org.apache.maven.wagon.ResourceDoesNotExistException;
 import org.apache.maven.wagon.TransferFailedException;
