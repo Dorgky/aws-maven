@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.kuraun</groupId>
+    <groupId>io.github.dorgky</groupId>
     <artifactId>aws-maven</artifactId>
     <packaging>jar</packaging>
     <version>7.0.0.RELEASE</version>
