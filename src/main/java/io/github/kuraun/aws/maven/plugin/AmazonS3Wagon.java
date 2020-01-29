@@ -173,7 +173,7 @@ public final class AmazonS3Wagon extends AbstractWagon {
             this.amazonS3 = S3Client.builder()
                     .credentialsProvider(credentialsProvider)
                     // TODO:
-                    .region(Region.AP_NORTHEAST_1)
+                    .region(Region.US_EAST_1)
                     .build();
         }
     }
